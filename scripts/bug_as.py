@@ -85,8 +85,7 @@ def done():
     twist_msg.linear.x = 0
     twist_msg.angular.z = 0
     pub.publish(twist_msg)
-    
-    
+      
 def planning(goal):
     global regions_, position_, desired_position_, state_, yaw_, yaw_error_allowed_
     global srv_client_go_to_point_, srv_client_wall_follower_, act_s, pose_
@@ -152,9 +151,7 @@ def planning(goal):
     
     if success:
         rospy.loginfo('Goal: Succeeded!')
-        act_s.set_succeeded(result)
-    
-    
+        act_s.set_succeeded(result) 
 
 def main():
     time.sleep(2)
