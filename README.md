@@ -4,19 +4,21 @@
 1 * scrittura di file .srv e .msg
 2 - implementazione dell'action client node
 3 - implementazione del service node che ritorna le ultime coordinate inviate
+
+
 ## Informarsi su
 	
 # action client
-	-come si fa un action client
+	*come si fa un action client
 	-come si interfaccia col service corrispondente
-	-come si setta il target
-	-come si cancella il target
-	-feedback/status dell'action server per sapere quando il target è stato raggiunto
+	*come si setta il target
+	*come si cancella il target
+	*feedback/status dell'action server per sapere quando il target è stato raggiunto
 
 # messaggi	
-	* come si creano
-	come si usano
-	* un custom message per velocità e posizione
+	*come si creano
+	-come si usano
+	*un custom message per velocità e posizione
 
 # service node
 	* file .srv contenente valori posizione
@@ -28,16 +30,14 @@
 
 
 ## Applicazioni
-# A
-	Nodo che implementa action client, prendo in input coordinate (x,y) o le cancella; usare feedback/status di action server per sapere quando il target è stato raggiunto; l'action client pubblica di continuo su custom message posizione e velocità basandosi su valori del topic /odom (odometria)
+# A DONE
+	Nodo che implementa action client, prendo in input coordinate (x,y) o le cancella; usare feedback/status di action server per sapere quando il target è stato raggiunto; 	l'action client pubblica di continuo su custom message posizione e velocità basandosi su valori del topic /odom (odometria)
 
 # B
 	Service che quando chiamato ritorna le coordinate dell'ultimo target mandato dall'utente all'action server
 
 # C 
 	Creazione del launch file per avviare la completa simulazione
-
-
 
 
 
