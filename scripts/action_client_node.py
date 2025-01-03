@@ -3,11 +3,13 @@
 
 import rospy
 from geometry_msgs.msg import Point, Pose, Twist
+from sensors_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
 from assignment2_1_rt.srv import SentCoords
 from assignment2_1_rt.msg import PosVel, PlanningAction
 import actionlib
 import actionlib.msg
+imposrt actionlib_msgs.msg import GoalStatus
 import sys
 import select
 
@@ -16,6 +18,7 @@ import select
 #from actionlib_msgs.msg import GoalStatus
 
 pub_PsVl = rospy.Publisher("/posVel", PosVel, queue_size = 10)
+
 
 '''
 NODE DESCRIPTION:
@@ -29,6 +32,7 @@ is reached; once the target position is reached, the node will display a message
 
 
 def callback_pos(msg): # callback used to publish values of pos and vel of robot, based on odomoetry values
+    global pub_PsVl
     PsVl = PosVel()
     PsVl.pos_x = msg.pose.pose.position.x
     PsVl.pos_y = msg.pose.pose.position.y
@@ -37,38 +41,35 @@ def callback_pos(msg): # callback used to publish values of pos and vel of robot
     pub_PsVl.publish(PsVl)
 
 def pos_client():
-    # Creates the SimpleActionClient, passing the type of the action
-    
+       
     client = actionlib.SimpleActionClient('reached_target', PlanningAction)
-
-    # Waits until the action server has started up and started
-    # listening for goals.
     client.wait_for_server()
 
-    # Creates a goal to send to the action server.
     goal = assignment2_1_rt.msg.PlanningGoal(order=20)
+
+
+
+
+    rate = rospy.Rate(10)
 
     while not rospy.is_shutdown():
         rospy.loginfo("\n enter goal position as [x y] values: ")
         
-        goal.target_pose.pose.position.x = float(input(''))
-        goal.target_pose.pose.position.y = float(input(''))
+        goal.target_pose.pose.position.x = float(input("X value: "))
+        goal.target_pose.pose.position.y = float(input('Y value: '))
         client.send_goal(goal) #send goal to the action server
 
         #then if the situation requires the target cancelation:
-        print("Press 'k' to cancel the sent target coordinates: ")
+        cancel = input("Press 'k' to cancel the sent target coordinates: ")
         while(client.get_state() != actionlib.GoalAtatus.SUCCEEDED):
-            i, o, e = select.select( [sys.stdin], [], [], 1.0 )
-            if (i): #if there is input from terminal
-                cancel = sys.stdin.readline().strip()
-                if cancel == 'k':
+            if cancel == 'k':
                     client.cancel_goal()
-                    print("Goal deletion: confirmed")
+                    rospy.loginfo("Goal deletion: confirmed")
                     break
         
         if(client.get_state() == actionlib.GoalStatus.SUCCEEDED):
-            print("Robot has been reached the target position")
-
+            rospy.loginfo("Robot has been reached the target position")
+        rate.sleep()
 
 if __name__ == '__main__':
     try:
@@ -76,4 +77,4 @@ if __name__ == '__main__':
         rospy.Subscriber("/odom", Odometry, callback_pos) #to read [x y vx wz] values
         pos_client()
     except rospy.ROSInterruptException:
-        print("Failed in execution: program interrupted before completion", file=sys.stderr)
+        rospy.loginfo("Failed in execution: program interrupted before completion", file=sys.stderr)

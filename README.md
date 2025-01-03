@@ -15,8 +15,7 @@
 	*come si cancella il target
 	*feedback/status dell'action server per sapere quando il target è stato raggiunto
 	*su action client vedi se serve un timer per fare in modo che se scade il tempo prima del goal succede qualcosa o basta come ho messo io che se non lo tocchi va bene;
-	-provare a far pubblicare il goal su un topic che poi viene preso dal service e riportato al bisogno
-	-la soluzione usa i valori di configurazione che non sono indicati
+	-il primo valore base va preso dai parametri di configurazione
 
 # messaggi	
 	*come si creano
@@ -30,7 +29,7 @@
 	-l'attuale è basato sempre sui valori di configurazione, passare ad un topic
 
 # launch file
-	-creazione del launchfile
+	*creazione del launchfile
 
 
 ## Applicazioni
@@ -56,13 +55,12 @@
 
 
 
-
 # Given specifications:
 
 Create a new package, in which you will develop three nodes:
 - (a) A node that implements an action client, allowing the user to set a target (x, y) or to cancel it. Try to use the feedback/status of the action server to know when the target has been reached. The node also publishes the robot position and velocity as a custom message (x,y, vel_x, vel_z), by relying on the values published on the
 topic /odom;
-- (b) A service node that, when called, returnsthe coordinates of the last target sent by the user;
+- (b) A service node that, when called, returns the coordinates of the last target sent by the user;
 
 - Create a launch file to start the whole simulation
 
