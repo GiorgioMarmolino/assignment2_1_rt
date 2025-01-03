@@ -5,7 +5,7 @@ import rospy
 from geometry_msgs.msg import Point, Pose, Twist
 from nav_msgs.msg import Odometry
 from assignment2_1_rt.srv import SentCoords
-from assignment2_1_rt.msg import PosVel
+from assignment2_1_rt.msg import PosVel, PlanningAction
 import actionlib
 import actionlib.msg
 import sys
@@ -30,16 +30,16 @@ is reached; once the target position is reached, the node will display a message
 
 def callback_pos(msg): # callback used to publish values of pos and vel of robot, based on odomoetry values
     PsVl = PosVel()
-    PsVl.x = msg.pose.pose.position.x
-    PsVl.y = msg.pose.pose.position.y
-    PsVl.vx = msg.twist.twist.linear.x
-    PsVl.vz = msg.twist.twist.angular.z
+    PsVl.pos_x = msg.pose.pose.position.x
+    PsVl.pos_y = msg.pose.pose.position.y
+    PsVl.vel_x = msg.twist.twist.linear.x
+    PsVl.vel_z = msg.twist.twist.angular.z
     pub_PsVl.publish(PsVl)
 
 def pos_client():
     # Creates the SimpleActionClient, passing the type of the action
     
-    client = actionlib.SimpleActionClient('reached_target', assignment2_1_rt.msg.PlanningAction)
+    client = actionlib.SimpleActionClient('reached_target', PlanningAction)
 
     # Waits until the action server has started up and started
     # listening for goals.
