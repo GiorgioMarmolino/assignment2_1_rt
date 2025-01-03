@@ -1,4 +1,4 @@
-###This .py script is related to the service node, used to return the target values (x,y) sent by the user 
+#This .py script is related to the service node, used to return the target values (x,y) sent by the user 
 
 import rospy 
 import assignment2_1_rt.msg
@@ -10,9 +10,9 @@ trg_y = 0
 def see_values(req):
     global trg_x
     global trg_y
-    x=rospy.get_param('target_x')
-    y=rospy.get_param('target_y')
-    return SentCoordsResponse(x, y)
+    trg_x=rospy.get_param('target_x')
+    trg_y=rospy.get_param('target_y')
+    return SentCoordsResponse(trg_x, trg_y)
 
 def get_coords(): #main function
     rospy.init_node('SentCoordSrv')
@@ -20,4 +20,7 @@ def get_coords(): #main function
     rospy.spin()
 
 if name ==" main ":
-    get_coords()
+    try:
+        get_coords()
+    except:
+        rospy.logerr("Error in node execution")

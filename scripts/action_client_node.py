@@ -4,7 +4,7 @@
 
 import rospy
 from geometry_msgs.msg import Point, Pose, Twist
-#from nav_msgs.msg import Odometry
+from nav_msgs.msg import Odometry
 from srv import SentCoords
 from msg import PosVel
 import actionlib

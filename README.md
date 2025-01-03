@@ -10,10 +10,13 @@
 	
 # action client
 	*come si fa un action client
-	-come si interfaccia col service corrispondente
+	*come si interfaccia col service corrispondente
 	*come si setta il target
 	*come si cancella il target
 	*feedback/status dell'action server per sapere quando il target è stato raggiunto
+	*su action client vedi se serve un timer per fare in modo che se scade il tempo prima del goal succede qualcosa o basta come ho messo io che se non lo tocchi va bene;
+	-provare a far pubblicare il goal su un topic che poi viene preso dal service e riportato al bisogno
+	-la soluzione usa i valori di configurazione che non sono indicati
 
 # messaggi	
 	*come si creano
@@ -21,9 +24,10 @@
 	*un custom message per velocità e posizione
 
 # service node
-	* file .srv contenente valori posizione
-	-come si fa un service node
-	-service node che ritorna le ultime coordinate mandate all'action client
+	*file .srv contenente valori posizione
+	*come si fa un service node
+	*service node che ritorna le ultime coordinate mandate all'action client
+	-l'attuale è basato sempre sui valori di configurazione, passare ad un topic
 
 # launch file
 	-creazione del launchfile
@@ -39,7 +43,8 @@
 # C 
 	Creazione del launch file per avviare la completa simulazione
 
-
+# D
+	Aggiungere messaggi di log nel file
 
 
 
