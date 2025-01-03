@@ -3,13 +3,12 @@
 
 import rospy
 from geometry_msgs.msg import Point, Pose, Twist, PoseStamped
-from sensors_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
 from assignment2_1_rt.srv import SentCoords
 from assignment2_1_rt.msg import PosVel, PlanningAction
 import actionlib
 import actionlib.msg
-import actionlib_msgs.msg import GoalStatus
+from actionlib_msgs.msg import GoalStatus
 
 
 OdPose = Pose()
@@ -45,7 +44,7 @@ def pos_client(): #this works as the main function
     
     
 
-    rate = rospy.rate(10)
+    rate = rospy.Rate(10)
     while not rospy.is_shutdown():
 
         #we can change the target position
@@ -57,7 +56,7 @@ def pos_client(): #this works as the main function
         client.send_goal(goal)
 
         cancel = input("Press 'k' to cancel the sent target coordinates: ")
-        while(client.get_state() != actionlib.GoalAtatus.SUCCEEDED):
+        while(client.get_state() != actionlib.GoalStatus.SUCCEEDED):
             pub_target.publish(act_pos) #publish on topic value
             if cancel == 'k':
                     client.cancel_goal()

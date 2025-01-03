@@ -17,8 +17,8 @@ def get_target_sent(see_trg): #for subscriber
 def see_values(req): #fro service
     global trg_x
     global trg_y
-     #rospy.loginfo("Target sent has coordinates:\n X: %f \n Y: %f" %(trg_x, trg_y))
-     return SentCoordsResponse(trg_x, trg_y)
+    #rospy.loginfo("Target sent has coordinates:\n X: %f \n Y: %f" %(trg_x, trg_y))
+    return SentCoordsResponse(trg_x, trg_y)
 
 def get_coords(): #main function
     rospy.init_node('coordinates_service')
