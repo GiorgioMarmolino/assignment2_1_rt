@@ -39,7 +39,7 @@ def pos_client(): #this works as the main function
     act_pos.pose.position.z = 0.0
 
 
-    client = actionlib.SimpleActionClient('/reached_target', PlanningAction)
+    client = actionlib.SimpleActionClient('/reaching_goal', PlanningAction)
     client.wait_for_server()
     
     
@@ -57,7 +57,7 @@ def pos_client(): #this works as the main function
 
         cancel = input("Press 'k' to cancel the sent target coordinates: ")
         while(client.get_state() != actionlib.GoalStatus.SUCCEEDED):
-            pub_target.publish(act_pos) #publish on topic value
+            #pub_target.publish(act_pos) #publish on topic value
             if cancel == 'k':
                     client.cancel_goal()
                     rospy.loginfo("Goal deletion: confirmed")

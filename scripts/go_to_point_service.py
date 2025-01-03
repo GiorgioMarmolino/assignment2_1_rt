@@ -151,8 +151,8 @@ def main():
         if not active_:
             continue
         else:
-            desired_position_.x = rospy.get_param('des_pos_x')
-            desired_position_.y = rospy.get_param('des_pos_y')
+            desired_position_.x = rospy.get_param('target_x')
+            desired_position_.y = rospy.get_param('target_y')
             if state_ == 0:
                 fix_yaw(desired_position_)
             elif state_ == 1:
