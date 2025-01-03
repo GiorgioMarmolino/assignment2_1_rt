@@ -1,5 +1,4 @@
-#This .py script is related to the service node, used to return the target values (x,y) sent by the user 
-
+#! /usr/bin/env python
 import rospy 
 import assignment2_1_rt.msg
 from assignment2_1_rt.srv import SentCoords, SentCoordsResponse
@@ -15,11 +14,11 @@ def see_values(req):
     return SentCoordsResponse(trg_x, trg_y)
 
 def get_coords(): #main function
-    rospy.init_node('SentCoordSrv')
+    rospy.init_node('coordinates_service')
     s = rospy.Service('SentCoord', SentCoords, see_values) 
     rospy.spin()
 
-if name ==" main ":
+if __name__ == "__main__":
     try:
         get_coords()
     except:

@@ -1,24 +1,21 @@
-
 #! /usr/bin/env python
 
 
 import rospy
 from geometry_msgs.msg import Point, Pose, Twist
 from nav_msgs.msg import Odometry
-from srv import SentCoords
-from msg import PosVel
+from assignment2_1_rt.srv import SentCoords
+from assignment2_1_rt.msg import PosVel
 import actionlib
 import actionlib.msg
 import sys
-
-from __future__ import print_function
 import select
 
 
 #from nav_msgs.msg import Odometry
 #from actionlib_msgs.msg import GoalStatus
 
-pub_PsVl = rospy.publisher("/posVel", PosVel, queue_size = 10)
+pub_PsVl = rospy.Publisher("/posVel", PosVel, queue_size = 10)
 
 '''
 NODE DESCRIPTION:
@@ -75,8 +72,8 @@ def pos_client():
 
 if __name__ == '__main__':
     try:
-        rospy.init_node('action_client_node_py')
-        rospy.subscriber("/odom", Odometry, callback_pos) #to read [x y vx wz] values
+        rospy.init_node('bug_action_client')
+        rospy.Subscriber("/odom", Odometry, callback_pos) #to read [x y vx wz] values
         pos_client()
     except rospy.ROSInterruptException:
         print("Failed in execution: program interrupted before completion", file=sys.stderr)

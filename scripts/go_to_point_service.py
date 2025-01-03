@@ -20,8 +20,8 @@ yaw_ = 0
 state_ = 0
 # goal
 desired_position_ = Point()
-desired_position_.x = rospy.get_param('des_pos_x')
-desired_position_.y = rospy.get_param('des_pos_y')
+desired_position_.x = rospy.get_param('target_x')
+desired_position_.y = rospy.get_param('target_y')
 desired_position_.z = 0
 # parameters
 yaw_precision_ = math.pi / 9  # +/- 20 degree allowed
