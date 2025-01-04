@@ -95,8 +95,8 @@ def planning(goal):
     
     desired_position_.x = goal.target_pose.pose.position.x
     desired_position_.y = goal.target_pose.pose.position.y
-    rospy.set_param('des_pos_x', desired_position_.x)
-    rospy.set_param('des_pos_y', desired_position_.y)
+    rospy.set_param('target_x', desired_position_.x)
+    rospy.set_param('target_y', desired_position_.y)
     
     
     feedback = assignment2_1_rt.msg.PlanningFeedback()
@@ -162,8 +162,8 @@ def main():
     
     desired_position_.x = 0.0
     desired_position_.y = 1.0
-    rospy.set_param('des_pos_x', desired_position_.x)
-    rospy.set_param('des_pos_y', desired_position_.y)
+    rospy.set_param('target_x', desired_position_.x)
+    rospy.set_param('target_y', desired_position_.y)
     sub_laser = rospy.Subscriber('/scan', LaserScan, clbk_laser)
     sub_odom = rospy.Subscriber('/odom', Odometry, clbk_odom)
     pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)

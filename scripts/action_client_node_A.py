@@ -4,11 +4,14 @@
 import rospy
 from geometry_msgs.msg import Point, Pose, Twist, PoseStamped
 from nav_msgs.msg import Odometry
+
+import assignment2_1_rt
 from assignment2_1_rt.srv import SentCoords
 from assignment2_1_rt.msg import PosVel, PlanningAction
 import actionlib
 import actionlib.msg
 from actionlib_msgs.msg import GoalStatus
+
 
 
 OdPose = Pose()
@@ -39,7 +42,7 @@ def pos_client(): #this works as the main function
     act_pos.pose.position.z = 0.0
 
 
-    client = actionlib.SimpleActionClient('/reaching_goal', PlanningAction)
+    client = actionlib.SimpleActionClient('/reaching_goal', assignment2_1_rt.msg.PlanningAction)
     client.wait_for_server()
     
     
@@ -77,10 +80,10 @@ def pos_callback():
         global OdTwist  #twist from odometry
 
         PsVl = PosVel() #define a PosVel var to be used to send the custom message
-        PsVl.pos_x = OdPose.pose.pose.position.x
-        PsVl.pos_y = OdPose.pose.pose.position.y
-        PsVl.vel_x = OdTwist.twist.twist.linear.x
-        PsVl.vel_z = OdTwist.twist.twist.angular.z
+        PsVl.pos_x = OdPose.position.x
+        PsVl.pos_y = OdPose.position.y
+        PsVl.vel_x = OdTwist.linear.x
+        PsVl.vel_z = OdTwist.angular.z
         pub_PsVl.publish(PsVl) #publish on a custom message
 
 def odom_callback(msg_PsVl):
