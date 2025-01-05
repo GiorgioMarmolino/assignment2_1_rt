@@ -52,25 +52,25 @@ def pos_client(): #this works as the main function
         time.sleep(3) #used for a clean output on the terminal
         print("\n enter goal position as [x y] values: ")
         try:
-	    act_pos.pose.position.x = float(input("\n X value: "))
-	    act_pos.pose.position.y = float(input("\n Y value: "))
-	    act_pos.pose.position.z = 0.0
-	    goal = assignment2_1_rt.msg.PlanningGoal(target_pose=act_pos)
-	    client.send_goal(goal)
-	    rospy.loginfo("Coordinates (%.1f, %.1f) sent | Press 'k' to cancel the sent target coordinates: "%(act_pos.pose.position.x, act_pos.pose.position.y ))
-		
-	    while(client.get_state() != actionlib.GoalStatus.SUCCEEDED):
-	        i, o, e = select.select([sys.stdin], [], [], 1.0)
-	        pos_callback()
-	        if(i):
-	            cancel = sys.stdin.readline().strip()
-	            if cancel == 'k':
-	                client.cancel_goal()
-	                #rospy.loginfo("Goal deletion: confirmed") #log already exist
-	                break
-		
-	    if(client.get_state() == actionlib.GoalStatus.SUCCEEDED):
-	        rospy.loginfo("Robot has been reached the target position")
+            act_pos.pose.position.x = float(input("\n X value: "))
+            act_pos.pose.position.y = float(input("\n Y value: "))
+            act_pos.pose.position.z = 0.0
+            goal = assignment2_1_rt.msg.PlanningGoal(target_pose=act_pos)
+            client.send_goal(goal)
+            rospy.loginfo("Coordinates (%.1f, %.1f) sent | Press 'k' to cancel the sent target coordinates: "%(act_pos.pose.position.x, act_pos.pose.position.y ))
+            
+            while(client.get_state() != actionlib.GoalStatus.SUCCEEDED):
+                i, o, e = select.select([sys.stdin], [], [], 1.0)
+                pos_callback()
+                if(i):
+                    cancel = sys.stdin.readline().strip()
+                    if cancel == 'k':
+                        client.cancel_goal()
+                        #rospy.loginfo("Goal deletion: confirmed") #log already exist
+                        break
+            
+            if(client.get_state() == actionlib.GoalStatus.SUCCEEDED):
+                rospy.loginfo("Robot has been reached the target position")
 
         except ValueError:
             print("Invalid input - Please enter a number")
