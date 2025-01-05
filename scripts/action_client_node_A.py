@@ -12,6 +12,7 @@ import actionlib
 import actionlib.msg
 from actionlib_msgs.msg import GoalStatus
 
+import sys
 
 
 OdPose = Pose()
@@ -60,11 +61,13 @@ def pos_client(): #this works as the main function
 
         cancel = input("Press 'k' to cancel the sent target coordinates: ")
         while(client.get_state() != actionlib.GoalStatus.SUCCEEDED):
-            #pub_target.publish(act_pos) #publish on topic value
-            if cancel == 'k':
-                    client.cancel_goal()
-                    rospy.loginfo("Goal deletion: confirmed")
-                    break
+            i, o, e = select.select([sys.stdin], [], [], 1.0)
+            if(i):
+                cancel = sys.stdin.readline().strip()
+                if cancel == 'k':
+                        client.cancel_goal()
+                        rospy.loginfo("Goal deletion: confirmed")
+                        break
         
         if(client.get_state() == actionlib.GoalStatus.SUCCEEDED):
             rospy.loginfo("Robot has been reached the target position")
