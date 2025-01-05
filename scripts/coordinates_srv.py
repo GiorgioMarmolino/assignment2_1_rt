@@ -11,7 +11,8 @@ def see_values(req): #for service
     global trg_x, trg_y
     trg_x = rospy.get_param('target_x')
     trg_y = rospy.get_param('target_y')
-    return SentCoordsResponse(trg_x, trg_y)
+    info = "Last target sent coordinates: "
+    return SentCoordsResponse(info, trg_x, trg_y)
 
 def get_coords(): #main function
     rospy.init_node('coordinates_service')

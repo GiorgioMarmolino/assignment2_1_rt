@@ -1,3 +1,4 @@
 ---
-float32 pos_x_sent
-float32 pos_y_sent
+string Info
+float32 Pos_x_sent
+float32 Pos_y_sent

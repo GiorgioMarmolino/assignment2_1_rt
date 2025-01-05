@@ -13,6 +13,8 @@ import actionlib.msg
 from actionlib_msgs.msg import GoalStatus
 
 import sys
+import select
+import time
 
 
 OdPose = Pose()
@@ -34,13 +36,12 @@ def pos_client(): #this works as the main function
     rospy.init_node('bug_action_client')
     rospy.Subscriber("/odom", Odometry, odom_callback)#to read odometry values
     
-    pub_target = rospy.Publisher("/targetPosition", PoseStamped, queue_size=10)
     act_pos = PoseStamped()
 
-    #as standard from launch file parameters:
-    act_pos.pose.position.x = rospy.get_param('target_x')
-    act_pos.pose.position.y = rospy.get_param('target_y')
-    act_pos.pose.position.z = 0.0
+    #as standard from launch file parameters: #not eequired
+    #act_pos.pose.position.x = rospy.get_param('target_x')
+    #act_pos.pose.position.y = rospy.get_param('target_y')
+    #act_pos.pose.position.z = 0.0
 
 
     client = actionlib.SimpleActionClient('/reaching_goal', assignment2_1_rt.msg.PlanningAction)
@@ -52,27 +53,30 @@ def pos_client(): #this works as the main function
     while not rospy.is_shutdown():
 
         #we can change the target position
-        rospy.loginfo("\n enter goal position as [x y] values: ")
-        act_pos.pose.position.x = float(input("X value: "))
-        act_pos.pose.position.y = float(input("Y value: "))
+        time.sleep(3) #used for a clean output on the terminal
+        print("\n enter goal position as [x y] values: ")
+        act_pos.pose.position.x = float(input("\n X value: "))
+        act_pos.pose.position.y = float(input("\n Y value: "))
         act_pos.pose.position.z = 0.0
         goal = assignment2_1_rt.msg.PlanningGoal(target_pose=act_pos)
         client.send_goal(goal)
+        rospy.loginfo("Coordinates (%f, %f) sent | Press 'k' to cancel the sent target coordinates: "%(act_pos.pose.position.x, act_pos.pose.position.y ))
 
-        cancel = input("Press 'k' to cancel the sent target coordinates: ")
+        
         while(client.get_state() != actionlib.GoalStatus.SUCCEEDED):
             i, o, e = select.select([sys.stdin], [], [], 1.0)
+            pos_callback()
             if(i):
                 cancel = sys.stdin.readline().strip()
                 if cancel == 'k':
                         client.cancel_goal()
-                        rospy.loginfo("Goal deletion: confirmed")
+                        #rospy.loginfo("Goal deletion: confirmed") #log already exist
                         break
         
         if(client.get_state() == actionlib.GoalStatus.SUCCEEDED):
             rospy.loginfo("Robot has been reached the target position")
 
-        pos_callback()
+        
         rate.sleep()
 
 
@@ -87,7 +91,8 @@ def pos_callback():
         PsVl.pos_y = OdPose.position.y
         PsVl.vel_x = OdTwist.linear.x
         PsVl.vel_z = OdTwist.angular.z
-        pub_PsVl.publish(PsVl) #publish on a custom message
+        pub_PsVl.publish(PsVl)
+        
 
 def odom_callback(msg_PsVl):
     global OdPose
@@ -96,4 +101,5 @@ def odom_callback(msg_PsVl):
     OdTwist = msg_PsVl.twist.twist
 
 if __name__ == '__main__':
+    time.sleep(12)
     pos_client()
