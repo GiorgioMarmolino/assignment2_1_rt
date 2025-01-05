@@ -6,12 +6,13 @@ from assignment2_1_rt.srv import SentCoords, SentCoordsResponse
 
 trg_x = 0.0
 trg_y = 0.0
+info = "Last target sent coordinates: "
     
 def see_values(req): #for service
-    global trg_x, trg_y
+    global trg_x, trg_y, info
     trg_x = rospy.get_param('target_x')
     trg_y = rospy.get_param('target_y')
-    info = "Last target sent coordinates: "
+    
     return SentCoordsResponse(info, trg_x, trg_y)
 
 def get_coords(): #main function
