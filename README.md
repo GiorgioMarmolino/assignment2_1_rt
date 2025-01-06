@@ -50,23 +50,23 @@ Before executing the project you are required to:
 
 ## Running the project
 After cloning this repository into your src/ folder of your ROS1 workspace:
-'''bash
+```bash
 git clone https://github.com/GiorgioMarmolino/assignment2_1_rt
-'''
+```
 go back in the main folder of your ROS-WS and build this package:
-'''bash
+```bash
 catkin_make --only-pkg-with-deps assignment2_1_rt
-'''
+```
 and launch the project using the launch file:
-'''bash
+```bash
 roslaunch assignment2_1_rt assignment1.launch
-'''
+```
 
 To manage the project and see it all, it is not mandatory but it is higly recommended to open more windows:
 1) in the first window execute the roslaunch command: here you will use this window to send commands about the target position or to cancel the goal sent to the action service;
 2) the second window is usefull whenever you want to check the goal sent to the action service, by using the command rosservice call /SentCoord
 3) the third window can be used to check the values published as a custom message on the topic /posVel; this can be done using the command
 
-'''bash
+```bash
 rostopic echo /posVel
-'''
+```
