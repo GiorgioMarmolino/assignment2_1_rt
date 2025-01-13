@@ -1,0 +1,2 @@
+float32 pos_x_feet
+float32 pos_y_feet

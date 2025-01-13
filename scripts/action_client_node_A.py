@@ -7,7 +7,7 @@ from nav_msgs.msg import Odometry
 
 import assignment2_1_rt
 from assignment2_1_rt.srv import SentCoords
-from assignment2_1_rt.msg import PosVel, PlanningAction
+from assignment2_1_rt.msg import PosVel, FeetPos, PlanningAction
 import actionlib
 import actionlib.msg
 from actionlib_msgs.msg import GoalStatus
@@ -21,6 +21,8 @@ OdPose = Pose()
 OdTwist = Twist()
 pub_PsVl = rospy.Publisher("/posVel", PosVel, queue_size = 10)
 msg_PsVl = PosVel()# message to be published
+msg_FeetPos = FeetPos() #ADDED VALUE
+feet_pub = rospy.Publisher("/feet_pos", FeetPos, queue_size = 10) #ADDED PUBLISHER
 
 '''
 NODE DESCRIPTION:
@@ -81,7 +83,7 @@ def pos_client(): #this works as the main function
 
         
 def pos_callback():
-        global pub_PsVl #publisher
+        global pub_PsVl, feet_pub #publisher
         global OdPose, OdTwist  #pose and twist from odometry 
 
         PsVl = PosVel() #define a PosVel var to be used to send the custom message
@@ -90,6 +92,14 @@ def pos_callback():
         PsVl.vel_x = OdTwist.linear.x
         PsVl.vel_z = OdTwist.angular.z
         pub_PsVl.publish(PsVl)
+
+        #MODIFIED IN ORDER TO PUBLISH POSITION CONVERTED TO FEET
+        
+        feet_pos = FeetPos()
+        feet_pos.pos_x_feet = PsVl.pos_x * 3.28
+        feet_pos.pos_y_feet = PsVl.pos_y * 3.28
+        feet_pub.publish(feet_pos)
+        
         
 
 def odom_callback(msg_PsVl):
