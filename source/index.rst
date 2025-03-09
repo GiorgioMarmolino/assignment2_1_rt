@@ -6,16 +6,29 @@
 Assignment 2, Part 1 - Project Documentation
 ============================================
 Welcome to the documentation of the first part of the second project related to the Research Track 1 course.
-**(SCRIVERE COSA FA IL PROGETTO IN DETTAGLIO)**
+In this project, a mobile robot moves in an environment of a 3D simulator in presence of edges and obstacles 
+(given by walls); the goal of the robot is to reach the target position sent by the user.
+
+This project has been developed starting from the original package of prof. Recchiuto:
+
+'Original repository: <https://github.com/CarmineD8/assignment_2_2024>'
+
+Two nodes have been developed by me:
+-first node implements an action client, allowing the user to set a target (x, y) or to cancel it. It uses 
+the feedback/status of the action server to know when the target has been reached. The node also publishes 
+the robot position and velocity as a custom message (x,y, vel_x, vel_z), by relying on the values published 
+on the topic /odom (odometry);
+-second node implements a service node that, when called, returns the coordinates of the last target sent by 
+the user;
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   introduzione
-   installazione
-   action_client_node
-   coordinate_service
+   Introduzione
+   Installazione
+   Action_client_node
+   Coordinate_service
 
 
 
@@ -34,13 +47,13 @@ Indices
  * :ref:`coordinate_service`
 
 ---
-
+.. _Introduzione:
 Introduzione
 ============
 Questa è la sezione introduttiva. **SCRIVI UN INTRO**
 
 ---
-.. _installazione:
+.. _Installazione:
 
 Installazione
 =============
@@ -48,7 +61,7 @@ Installazione
 Istruzioni su come installare il progetto.
 
 ---
-.. _action_client_node:
+.. _Action_client_node:
 Action Client Node
 ==================
 .. automodule:: scripts.action_client_node_A
@@ -59,7 +72,7 @@ Action Client Node
 ---
 
 
-.. _coordinate_service:
+.. _Coordinate_service:
 Coordinate Service
 ==================
 .. automodule:: scripts.coordinate_srv
