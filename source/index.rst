@@ -24,16 +24,20 @@ Here is the documentation for the first part of the second project related to th
 Indices
 *******
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+* :ref:`Project introduction`
+* :ref:`installazione`
+* :ref:`Action Client`
+* :ref:`moduli`
+
+.. _Project introduction: Introduzione
+============
+
+Questa è la sezione introduttiva.
 
 
 
 
-
-
-Coordinate module
+.. _Action Client: Action Client Node
 =================
 
 .. automodule:: scripts.action_client_node_A
