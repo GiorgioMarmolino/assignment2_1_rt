@@ -23,16 +23,34 @@ pub_PsVl = rospy.Publisher("/posVel", PosVel, queue_size = 10)
 msg_PsVl = PosVel()# message to be published
 
 '''
-NODE DESCRIPTION:
+Action client - Node description:
 
-The client waits for the user to enter a valid target position for the robot given by [x y] coordinates;
-once the goal is sent, the user is allowed to cancel the sent goal pressing 'k' in the terminal command line;
-if the user doesn't cancel the goal sent, the system will work without interruptions until the target position
-is reached; once the target position is reached, the node will display a message confirming the goal.
+This node implements an action client that allow the user to set the coordinates of a target position ([x y] coordinates) that the 
+mobile robot has to reach; going deeper, writing with the keyboard on the terminal line, the user send to the action 
+server the new coordinates by the topic '/reaching_goal'. Once the node is running, a message will be displayed 
+asking the user to send coordinates of the target; once the message is sent, the user is allowed to cancel the 
+sent goal by sending a 'k' until the robot reach the target (this is implemented relying on the feedback/status 
+of the action server) ;otherwise the robot will work until it reach the target. Since the node is required to 
+publish as a custom message the position and velocuty of the robot relying on the values published on the 
+topic /odom, inside of it we can find:
+- a subscriber to the topic /odom
+- a publisher on the topic /posVel
+- function pos_callback() implemented in order to take values from the topic /odom and publish it on the topic /posVel
+
 '''
 
 def pos_client(): #this works as the main function
 
+    '''
+    This is the main function of the *action client node*;
+    '''
+    
+
+
+
+
+
+    
     rospy.init_node('bug_action_client')
     rospy.Subscriber("/odom", Odometry, odom_callback)#to read odometry values
     rate = rospy.Rate(10)
