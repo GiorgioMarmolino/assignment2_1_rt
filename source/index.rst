@@ -9,9 +9,9 @@ Welcome to the documentation of the first part of the second project related to 
 In this project, a mobile robot moves in an environment of a 3D simulator in presence of edges and obstacles 
 (given by walls); the goal of the robot is to reach the target position sent by the user.
 
-This project has been developed starting from the original package of prof. Recchiuto:
+This project has been developed starting from the 'original package <https://github.com/CarmineD8/assignment_2_2024/>'_ of prof. Recchiuto:
 
-'Original repository: <https://github.com/CarmineD8/assignment_2_2024>'
+
 
 Two nodes have been developed by me:
 -first node implements an action client, allowing the user to set a target (x, y) or to cancel it. It uses 
@@ -25,10 +25,12 @@ the user;
    :maxdepth: 2
    :caption: Contents:
 
-   Introduzione
-   Installazione
-   Action_client_node
-   Coordinate_service
+Indices
+*******
+ * :ref:`Introduzione`
+ * :ref:`Installazione`
+ * :ref:`Action_client_node`
+ * :ref:`Coordinates_service`
 
 
 
@@ -39,20 +41,18 @@ Here is the documentation for the first part of the second project related to th
 SCRIVERE COSA FA IL PROGETTO
 
 
-Indices
-*******
- * :ref:`introduzione`
- * :ref:`installazione`
- * :ref:`action_client_node`
- * :ref:`coordinate_service`
 
----
+
+
+
 .. _Introduzione:
+
 Introduzione
-============
+**************
 Questa è la sezione introduttiva. **SCRIVI UN INTRO**
 
----
+
+
 .. _Installazione:
 
 Installazione
@@ -60,23 +60,28 @@ Installazione
 
 Istruzioni su come installare il progetto.
 
----
+
+
 .. _Action_client_node:
+
 Action Client Node
-==================
+********************
 .. automodule:: scripts.action_client_node_A
+
    :imported-members:
    :members:
    :undoc-members:
    :show-inheritance:
----
 
 
-.. _Coordinate_service:
-Coordinate Service
-==================
-.. automodule:: scripts.coordinate_srv
-   :imported-members:
-   :members:
-   :undoc-members:
-   :show-inheritance:
+
+
+.. _Coordinates_service:
+
+Coordinates Service
+**********************
+.. automodule:: scripts.coordinates_srv
+
+    :members:
+   
+

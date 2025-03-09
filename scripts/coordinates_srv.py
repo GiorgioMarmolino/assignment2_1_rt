@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-import rospy 
+import rospy
 import assignment2_1_rt.msg
 from geometry_msgs.msg import PoseStamped
 from assignment2_1_rt.srv import SentCoords, SentCoordsResponse
@@ -10,8 +10,10 @@ info = "Last target sent coordinates: "
     
 """
 .. module:: coordinate_srv
+
  :platform: Unix
  :synopsis: Python module for the coordinate_srv
+ 
  .. moduleauthor:: Marmolino Giorgio
 
 This node is a service node, so it means that it implements a communication of type request/response; this node use the SentCoords service 
@@ -30,8 +32,10 @@ and it will return:
 def see_values(req): #for service
     """
     .. module:: coordinate_srv
+    
     :platform: Unix
     :synopsis: Python module for the coordinate_srv
+    
     .. moduleauthor:: Marmolino Giorgio
 
     This function retrieves values from the list of parameters using the ''rospy.get_param'' function, and then it load these values in two
@@ -45,12 +49,16 @@ def see_values(req): #for service
 
 def get_coords(): #main function
     """
+    
     .. module:: coordinate_srv
+    
     :platform: Unix
     :synopsis: Python module for the coordinate_srv
+    
     .. moduleauthor:: Marmolino Giorgio
     
     This is the main function of the service node, it is used to initialize the service node, implement the service and spin it.
+    
     """
     rospy.init_node('coordinates_service')
     rospy.Service('SentCoord', SentCoords, see_values) 

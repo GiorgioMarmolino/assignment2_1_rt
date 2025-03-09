@@ -24,8 +24,10 @@ msg_PsVl = PosVel()# message to be published
 
 """
  .. module:: action_client_node
+ 
  :platform: Unix
  :synopsis: Python module for the action_client_node
+ 
  .. moduleauthor:: Marmolino Giorgio
 
 This node implements an action client that allow the user to set the coordinates of a target position ( [x y] coordinates) that the 
