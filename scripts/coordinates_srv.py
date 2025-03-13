@@ -9,12 +9,6 @@ trg_y = 0.0
 info = "Last target sent coordinates: "
     
 """
-.. module:: coordinate_srv
-
- :platform: Unix
- :synopsis: Python module for the coordinate_srv
- 
- .. moduleauthor:: Marmolino Giorgio
 
 This node is a service node, so it means that it implements a communication of type request/response; this node use the SentCoords service 
 (inside the folder srv we can find SentCoords.srv); in detail this service is composed only by the response part since it is required to return 
@@ -31,12 +25,6 @@ and it will return:
 """
 def see_values(req): #for service
     """
-    .. module:: coordinate_srv
-    
-    :platform: Unix
-    :synopsis: Python module for the coordinate_srv
-    
-    .. moduleauthor:: Marmolino Giorgio
 
     This function retrieves values from the list of parameters using the ''rospy.get_param'' function, and then it load these values in two
     global variables dedicated to the (x,y) coordinate target values.
