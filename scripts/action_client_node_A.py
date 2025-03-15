@@ -34,10 +34,10 @@ This node implements an action client that allow the user to set the coordinates
 mobile robot has to reach; going deeper, writing with the keyboard on the terminal line, the user send to the action 
 server the new coordinates by the topic */reaching_goal*. Once the node is running, a message will be displayed 
 asking the user to send coordinates of the target; once the message is sent, the user is allowed to cancel the 
-sent goal by sending a 'k' until the robot reach the target (this is implemented relying on the feedback/status 
-of the action server) ;otherwise the robot will work until it reach the target. Since the node is required to 
-publish as a custom message the position and velocuty of the robot relying on the values published on the 
-topic /odom, inside of it we can find:
+sent goal by sending a *"k"* until the robot reach the target (this is implemented relying on the feedback/status 
+of the action server); otherwise the robot will work until it reach the target. Since the node is required to 
+publish as a custom message the position and velocity of the robot relying on the values published on the 
+topic */odom*, inside of it we can find:
 
 - a subscriber to the topic */odom*;
 - a publisher on the topic */posVel*;

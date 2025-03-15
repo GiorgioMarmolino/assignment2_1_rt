@@ -43,14 +43,22 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <!-- Local TOC -->
               <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Assignment 2, Part 1 - Project Documentation</a><ul>
+<li><a class="reference internal" href="#">Assignment 2, Part 1 - Project Documentation</a></li>
 <li><a class="reference internal" href="#indices">Indices</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#research-track-1-second-assignment-project-documentation">Research Track 1: Second Assignment Project Documentation</a><ul>
 <li><a class="reference internal" href="#introduction">Introduction</a></li>
 <li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
 <li><a class="reference internal" href="#running-the-project">Running the project</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#package-description">Package description</a><ul>
+<li><a class="reference internal" href="#structure-overview">Structure Overview</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#package-dependencies">Package dependencies</a><ul>
+<li><a class="reference internal" href="#required-dependencies">Required Dependencies</a></li>
+<li><a class="reference internal" href="#configuration-files">Configuration Files</a></li>
+<li><a class="reference internal" href="#id5">Installation</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#node-descriptions">Node Descriptions</a><ul>
@@ -70,9 +78,10 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#ros-launch-file">ROS Launch File</a></li>
-<li><a class="reference internal" href="#messages-and-services">Messages and Services</a><ul>
+<li><a class="reference internal" href="#messages-services-and-actions">Messages, services and actions</a><ul>
 <li><a class="reference internal" href="#posvel-msg">PosVel.msg</a></li>
 <li><a class="reference internal" href="#sentcoords-srv">SentCoords.srv</a></li>
+<li><a class="reference internal" href="#planning-action">Planning.action</a></li>
 </ul>
 </li>
 </ul>
@@ -106,48 +115,50 @@
 <p>Welcome to the documentation of the first part of the second project related to the Research Track 1 course.</p>
 <div class="toctree-wrapper compound">
 </div>
+</section>
 <section id="indices">
-<h2>Indices<a class="headerlink" href="#indices" title="Permalink to this heading"></a></h2>
+<h1>Indices<a class="headerlink" href="#indices" title="Permalink to this heading"></a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="#introduction"><span class="std std-ref">Introduction</span></a></p></li>
 <li><p><a class="reference internal" href="#installation"><span class="std std-ref">Prerequisites</span></a></p></li>
-<li><p><a class="reference internal" href="#action-client-node"><span class="std std-ref">Action Client Node</span></a></p></li>
-<li><p><a class="reference internal" href="#coordinates-service"><span class="std std-ref">Coordinates Service</span></a></p></li>
-<li><p><a class="reference internal" href="#launch-file"><span class="std std-ref">ROS Launch File</span></a></p></li>
-<li><p><a class="reference internal" href="#message"><span class="std std-ref">PosVel.msg</span></a></p></li>
-<li><p><a class="reference internal" href="#service"><span class="std std-ref">SentCoords.srv</span></a></p></li>
 <li><p><a class="reference internal" href="#running-the-project"><span class="std std-ref">Running the project</span></a></p></li>
+<li><p><a class="reference internal" href="#package-description"><span class="std std-ref">Package description</span></a></p></li>
+<li><p><a class="reference internal" href="#package-dependencies"><span class="std std-ref">Package dependencies</span></a></p></li>
+<li><p><a class="reference internal" href="#node-description"><span class="std std-ref">Node Descriptions</span></a></p></li>
+<li><p><a class="reference internal" href="#launch-file"><span class="std std-ref">ROS Launch File</span></a></p></li>
+<li><p><a class="reference internal" href="#messages-services-and-actions"><span class="std std-ref">Messages, services and actions</span></a></p></li>
 </ul>
-</section>
 </section>
 <section id="research-track-1-second-assignment-project-documentation">
 <h1>Research Track 1: Second Assignment Project Documentation<a class="headerlink" href="#research-track-1-second-assignment-project-documentation" title="Permalink to this heading"></a></h1>
 <section id="introduction">
 <span id="id1"></span><h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading"></a></h2>
-<p>Here is the documentation for the first part of the second project related to the Research Track 1 course. In this project, a mobile robot moves in an environment of a 3D simulator in presence of edges and obstacles (given by walls); the goal of the robot is to reach the target position sent by the user.</p>
-<p>This project has been developed starting from the <a class="reference external" href="https://github.com/CarmineD8/assignment_2_2024/">original package</a> of Prof. Recchiuto.</p>
+<p>Here is the documentation for the first part of the second project related to the Research Track 1 course. In this project, a mobile robot moves in an environment of a 3D simulator in presence of edges and obstacles (given by walls); the goal of the robot is to reach the target position sent by the user. Given by the original package, the robot has been projected in order to follow a path according to the presence of walls; dedicated nodes developed by Prof. Recchiuto in the <a class="reference external" href="https://github.com/CarmineD8/assignment_2_2024/">original package</a> are used in order to reach the target position and follow the walls when they are detected trought sensors. Click to this <a class="reference external" href="https://github.com/GiorgioMarmolino/assignment2_1_rt/">link</a> to download the whole project.</p>
+<div class="images-row docutils container">
+<figure class="align-left" style="width: 40%">
+<img alt="Example of robot path to reach the target position." src="_images/Path2d.JPG" />
+</figure>
+<figure class="align-left" style="width: 50%">
+<img alt="3D simulation environment." src="_images/SimulationEnvironment.JPG" />
+</figure>
+</div>
 <p>Two nodes have been developed by me:</p>
 <ul class="simple">
 <li><p><strong>First node</strong> implements an action client, allowing the user to set a target (x, y) or to cancel it. It uses
 the feedback/status of the action server to know when the target has been reached. The node also publishes
 the robot position and velocity as a custom message (x, y, vel_x, vel_z), by relying on the values published
-on the topic <cite>/odom</cite> (odometry).</p></li>
-<li><p><strong>Second node</strong> implements a service node that, when called, returns the coordinates of the last target sent by the user.</p></li>
+on the topic <cite>/odom</cite> (odometry);</p></li>
+<li><p><strong>Second node</strong> implements a service node that, when called, returns the coordinates of the last target sent by the user, retrieving values from the launch file    parameters;</p></li>
 </ul>
-<p><strong>Valutare di inserire eventuali immagini</strong> parla dell’enviornment mettendo un immagine cose varie</p>
 </section>
 <section id="prerequisites">
 <span id="installation"></span><h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading"></a></h2>
-<p>Before executing the project you are required to:</p>
+<p>Before executing the project, you are required to install these tools, that are essential for the smooth execution and operation of the project:</p>
 <ol class="arabic simple">
-<li><p>Install Gazebo, the 3D simulator for the ROS;</p></li>
-</ol>
-<p>2. Install Rviz, a tool for ROS visualization that allows the user to view the simulated mobile robot model with all its sensors and related informations;
-it is usefull for debug purposes;</p>
-<ol class="arabic simple" start="3">
-<li><p>Xterm;</p></li>
-<li><p>python3, since the code is written in python3;</p></li>
-<li><p>Robot Operating System (known as ROS);</p></li>
+<li><p><strong>Gazebo</strong>: A 3D simulator for ROS that allows you to simulate robotic environments, test algorithms, and evaluate robot behavior in a virtual setting.</p></li>
+<li><p><strong>Rviz</strong>: A powerful tool for ROS visualization that enables users to view the simulated mobile robot model along with its sensors, status, and related information. Rviz is particularly useful for debugging, monitoring sensor data, and inspecting the robot’s environment.</p></li>
+<li><p><strong>Python 3</strong>: Required because the code is written in Python 3, which includes important features and lbraries for robot control, data processing, and interaction with ROS nodes.</p></li>
+<li><p><strong>Robot Operating System (ROS)</strong>: A flexible framework for writing robot software that provides a collection of tools, libraries, and conventions to simplify the development of complex robot behavior. ROS is essential for managing the communication between different parts of the system, including sensors, actuators, and algorithms.</p></li>
 </ol>
 </section>
 <section id="running-the-project">
@@ -170,23 +181,141 @@ it is usefull for debug purposes;</p>
 </div>
 </li>
 </ol>
-<dl class="simple">
-<dt>To manage the project and see it all, it is not mandatory but it is higly recommended to open more windows:</dt><dd><ol class="arabic simple">
+<p>To manage the project and see it all, it is not mandatory but it is higly recommended to open more windows:</p>
+<blockquote>
+<div><ol class="arabic simple">
 <li><p>in the first window execute the roslaunch command: here you will use this window to send commands about the target position or to cancel the goal sent to the action service;</p></li>
-<li><p>the second window is usefull whenever you want to check the goal sent to the action service, by using the command rosservice call /SentCoord</p></li>
-<li><p>the third window can be used to check the values published as a custom message on the topic /posVel; this can be done using the command</p></li>
+<li><p>the second window is usefull whenever you want to check the goal sent to the action service, by using the command rosservice call <em>/SentCoord</em>;</p></li>
+<li><p>the third window can be used to check the values published as a custom message on the topic <em>/posVel</em>; this can be done using the command;</p></li>
 </ol>
-</dd>
-</dl>
+</div></blockquote>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rostopic<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>/posVel
 </pre></div>
 </div>
 </section>
 </section>
+<section id="package-description">
+<span id="id3"></span><h1>Package description<a class="headerlink" href="#package-description" title="Permalink to this heading"></a></h1>
+<p>This ROS package provides a complete environment for developing and testing autonomous navigation algorithms. The robot can be controlled via ROS services and pre-defined action servers, while the Gazebo simulation ensures realistic behavior. Additionally, RViz integration allows real-time monitoring of the robot’s position and actions. Since the package is designed for simulation and control of a mobile robot, <strong>Gazebo</strong> is for physics simulation and <strong>RViz</strong> is used for visualization. The package structure is organized into multiple directories to separate configuration files, ROS nodes, and simulation assets.</p>
+<figure class="align-center">
+<img alt="3D simulation environment." src="_images/packageStructure.JPG" />
+</figure>
+<section id="structure-overview">
+<h2>Structure Overview<a class="headerlink" href="#structure-overview" title="Permalink to this heading"></a></h2>
+<ul>
+<li><p><strong>Configuration and Build Files</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code>, <code class="docutils literal notranslate"><span class="pre">package.xml</span></code>: Required files for package configuration and compilation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">Doxyfile.in</span></code>, <code class="docutils literal notranslate"><span class="pre">Makefile</span></code>: Used for automatic documentation generation.</p></li>
+</ul>
+</li>
+<li><p><strong>Custom Messages, Services, and Actions</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">msg/PosVel.msg</span></code>: Defines a custom ROS message for inter-node communication.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">srv/SentCoords.srv</span></code>: Defines a ROS service for handling coordinate data.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">action/Planning.action</span></code>: Defines an action for long-term tasks, such as movement control.</p></li>
+</ul>
+</li>
+<li><p><strong>RViz Configuration Files</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">config/sim.rviz</span></code>, <code class="docutils literal notranslate"><span class="pre">config/sim2.rviz</span></code>: Configuration files for RViz visualization.</p></li>
+</ul>
+</li>
+<li><p><strong>Launch Files</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">launch/assignment1.launch</span></code>, <code class="docutils literal notranslate"><span class="pre">launch/sim_w1.launch</span></code>: ROS launch files that start the simulation and required nodes.</p></li>
+</ul>
+</li>
+<li><p><strong>ROS Nodes (Python Scripts)</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">scripts/</span></code> directory contains various ROS nodes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">action_client_node_A.py</span></code>: Action client node for executing <code class="docutils literal notranslate"><span class="pre">Planning.action</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bug_as.py</span></code>: This script implements a ROS action that allows a mobile robot to reach a target position while avoiding obstacles when necessary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">coordinates_srv.py</span></code>, <code class="docutils literal notranslate"><span class="pre">go_to_point_service.py</span></code>, <code class="docutils literal notranslate"><span class="pre">wall_follow_service.py</span></code>: ROS services for robot control, including waypoint navigation, wall-following behavior and information retrieving.</p></li>
+</ul>
+</li>
+<li><p><strong>Gazebo Simulation Files</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">urdf/robot2_laser.gazebo</span></code>, <code class="docutils literal notranslate"><span class="pre">urdf/robot2_laser.xacro</span></code>: URDF model files defining the robot for Gazebo simulation.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">world/assignment.world</span></code>: Defines the simulated environment for testing the robot.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="package-dependencies">
+<span id="id4"></span><h1>Package dependencies<a class="headerlink" href="#package-dependencies" title="Permalink to this heading"></a></h1>
+<p>This package relies on multiple ROS components for navigation, messaging, and action management. The dependencies are defined in both the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">CMakeLists.txt</span></code> files.</p>
+<section id="required-dependencies">
+<h2>Required Dependencies<a class="headerlink" href="#required-dependencies" title="Permalink to this heading"></a></h2>
+<p>The following ROS packages are required for building and running this package:</p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Core ROS Libraries</strong>:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">roscpp</span></code> : C++ client library for ROS.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rospy</span></code> : Python client library for ROS.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">catkin</span></code> : ROS build system.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Messaging and Services</strong>:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">std_msgs</span></code> :Standard ROS message types (e.g., strings, integers, booleans).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">std_srvs</span></code> : Standard ROS service definitions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message_generation</span></code> : Required for generating custom messages, services, and actions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">message_runtime</span></code> : Allows the use of generated messages in runtime.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Navigation and Coordinate Transformations</strong>:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">geometry_msgs</span></code> : Messages for positions, velocities, and transformations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nav_msgs</span></code> : Provides message types for navigation, such as odometry and path planning.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tf</span></code> : Handles transformations between coordinate frames.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Action and Communication Services</strong>:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">actionlib</span></code> : ROS library for implementing action servers and clients.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">actionlib_msgs</span></code> : Standard message definitions for ROS actions.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt><strong>Sensor Integration</strong>:</dt><dd><ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">sensor_msgs</span></code> : Defines messages for sensor data (e.g., laser scanners, cameras, IMUs).</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+<section id="configuration-files">
+<h2>Configuration Files<a class="headerlink" href="#configuration-files" title="Permalink to this heading"></a></h2>
+<p>The dependencies are declared in the following files:</p>
+<ul class="simple">
+<li><p><strong>`package.xml`</strong>: Specifies build-time and run-time dependencies using <cite>&lt;depend&gt;</cite> tags.</p></li>
+<li><p><strong>`CMakeLists.txt`</strong>: Defines dependencies using <code class="docutils literal notranslate"><span class="pre">find_package(catkin</span> <span class="pre">REQUIRED</span> <span class="pre">COMPONENTS</span> <span class="pre">...)</span></code>.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>Installation<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h2>
+<p>To ensure all dependencies are installed, run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosdep<span class="w"> </span>install<span class="w"> </span>--from-paths<span class="w"> </span>src<span class="w"> </span>--ignore-src<span class="w"> </span>-r<span class="w"> </span>-y
+</pre></div>
+</div>
+<p>This command automatically installs missing dependencies based on the <code class="docutils literal notranslate"><span class="pre">package.xml</span></code> file.</p>
+</section>
+</section>
 <section id="node-descriptions">
-<h1>Node Descriptions<a class="headerlink" href="#node-descriptions" title="Permalink to this heading"></a></h1>
+<span id="node-description"></span><h1>Node Descriptions<a class="headerlink" href="#node-descriptions" title="Permalink to this heading"></a></h1>
 <section id="module-scripts.action_client_node_A">
-<span id="id3"></span><span id="action-client-node"></span><h2>Action Client Node<a class="headerlink" href="#module-scripts.action_client_node_A" title="Permalink to this heading"></a></h2>
+<span id="action-client-node"></span><h2>Action Client Node<a class="headerlink" href="#module-scripts.action_client_node_A" title="Permalink to this heading"></a></h2>
 <dl class="py data">
 <dt class="sig sig-object py" id="scripts.action_client_node_A.msg_PsVl">
 <span class="sig-prename descclassname"><span class="pre">scripts.action_client_node_A.</span></span><span class="sig-name descname"><span class="pre">msg_PsVl</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">pos_x:</span> <span class="pre">0.0</span> <span class="pre">pos_y:</span> <span class="pre">0.0</span> <span class="pre">vel_x:</span> <span class="pre">0.0</span> <span class="pre">vel_z:</span> <span class="pre">0.0</span></em><a class="headerlink" href="#scripts.action_client_node_A.msg_PsVl" title="Permalink to this definition"></a></dt>
@@ -202,10 +331,10 @@ it is usefull for debug purposes;</p>
 mobile robot has to reach; going deeper, writing with the keyboard on the terminal line, the user send to the action
 server the new coordinates by the topic <em>/reaching_goal</em>. Once the node is running, a message will be displayed
 asking the user to send coordinates of the target; once the message is sent, the user is allowed to cancel the
-sent goal by sending a ‘k’ until the robot reach the target (this is implemented relying on the feedback/status
-of the action server) ;otherwise the robot will work until it reach the target. Since the node is required to
-publish as a custom message the position and velocuty of the robot relying on the values published on the
-topic /odom, inside of it we can find:</p>
+sent goal by sending a <em>“k”</em> until the robot reach the target (this is implemented relying on the feedback/status
+of the action server); otherwise the robot will work until it reach the target. Since the node is required to
+publish as a custom message the position and velocity of the robot relying on the values published on the
+topic <em>/odom</em>, inside of it we can find:</p>
 <ul class="simple">
 <li><p>a subscriber to the topic <em>/odom</em>;</p></li>
 <li><p>a publisher on the topic <em>/posVel</em>;</p></li>
@@ -242,7 +371,7 @@ coordinates and to catch other types of errors.</p>
 
 </section>
 <section id="module-scripts.coordinates_srv">
-<span id="id4"></span><span id="coordinates-service"></span><h2>Coordinates Service<a class="headerlink" href="#module-scripts.coordinates_srv" title="Permalink to this heading"></a></h2>
+<span id="coordinates-service"></span><h2>Coordinates Service<a class="headerlink" href="#module-scripts.coordinates_srv" title="Permalink to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.coordinates_srv.get_coords">
 <span class="sig-prename descclassname"><span class="pre">scripts.coordinates_srv.</span></span><span class="sig-name descname"><span class="pre">get_coords</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/coordinates_srv.html#get_coords"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.coordinates_srv.get_coords" title="Permalink to this definition"></a></dt>
@@ -261,24 +390,24 @@ coordinates and to catch other types of errors.</p>
 <dt class="sig sig-object py" id="scripts.coordinates_srv.info">
 <span class="sig-prename descclassname"><span class="pre">scripts.coordinates_srv.</span></span><span class="sig-name descname"><span class="pre">info</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Last</span> <span class="pre">target</span> <span class="pre">sent</span> <span class="pre">coordinates:</span> <span class="pre">'</span></em><a class="headerlink" href="#scripts.coordinates_srv.info" title="Permalink to this definition"></a></dt>
 <dd><p>This node is a service node, so it means that it implements a communication of type request/response; this node use the SentCoords service
-(inside the folder srv we can find SentCoords.srv); in detail this service is composed only by the response part since it is required to return
-two values related to the last target position coordinates sent by the user, and there isn’t any client that makes a request. The .srv response
-part is composed of a message (so a string) and two float32 values; for calling the service it is sufficient to use the command:</p>
-<blockquote>
-<div><p><em>rosservice call /SentCoord</em></p>
-</div></blockquote>
+(inside the folder <em>/srv</em> we can find <em>SentCoords.srv</em>); in detail this service is composed only by the response part since it is required to return
+two values related to the last target position coordinates sent by the user, and there isn’t any client that makes a request. The <em>.srv</em> response
+part is composed of a message (so a string) and two <em>float32</em> values; for calling the service it is sufficient to use the command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>rosservice<span class="w"> </span>call<span class="w"> </span>/SentCoord
+</pre></div>
+</div>
 <p>and it will return:</p>
-<blockquote>
-<div><p><em>Info:      “”Last target sent coordinates: ”
-Pos_x_sent: [value]
-Pos_y_sent: [value]</em></p>
-</div></blockquote>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- Info:      &quot;Last target sent coordinates: &quot;
+- Pos_x_sent: [value]
+- Pos_y_sent: [value]
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="scripts.coordinates_srv.see_values">
 <span class="sig-prename descclassname"><span class="pre">scripts.coordinates_srv.</span></span><span class="sig-name descname"><span class="pre">see_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/scripts/coordinates_srv.html#see_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#scripts.coordinates_srv.see_values" title="Permalink to this definition"></a></dt>
-<dd><p>This function retrieves values from the list of parameters using the ‘’rospy.get_param’’ function, and then it load these values in two
+<dd><p>This function retrieves values from the list of parameters using the <strong>rospy.get_param</strong> function, and then it load these values in two
 global variables dedicated to the (x,y) coordinate target values.</p>
 </dd></dl>
 
@@ -318,12 +447,12 @@ It also includes another launch file, <cite>sim_w1.launch</cite>, and sets some 
 </ul>
 </dd>
 </dl>
-<p>The launch file also includes <cite>sim_w1.launch</cite>, which may start the simulator or other necessary components.</p>
+<p>The launch file also includes <cite>sim_w1.launch</cite>, which may start the simulator and other necessary components (given by the original package of the assignment).</p>
 </section>
-<section id="messages-and-services">
-<h1>Messages and Services<a class="headerlink" href="#messages-and-services" title="Permalink to this heading"></a></h1>
+<section id="messages-services-and-actions">
+<span id="id6"></span><h1>Messages, services and actions<a class="headerlink" href="#messages-services-and-actions" title="Permalink to this heading"></a></h1>
 <section id="posvel-msg">
-<span id="message"></span><h2>PosVel.msg<a class="headerlink" href="#posvel-msg" title="Permalink to this heading"></a></h2>
+<h2>PosVel.msg<a class="headerlink" href="#posvel-msg" title="Permalink to this heading"></a></h2>
 <p>This message is used in order to represent a 2D position in space (so altitude excluded) and a velocity.</p>
 <p><strong>Message definition:</strong></p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>float32 pos_x
@@ -343,8 +472,8 @@ float32 vel_z
 </dl>
 </section>
 <section id="sentcoords-srv">
-<span id="service"></span><h2>SentCoords.srv<a class="headerlink" href="#sentcoords-srv" title="Permalink to this heading"></a></h2>
-<p>This service has been defined in order to retrieve the target position.</p>
+<h2>SentCoords.srv<a class="headerlink" href="#sentcoords-srv" title="Permalink to this heading"></a></h2>
+<p>This service has been defined in order to retrieve the target position from the target position parameters inside the launch file.</p>
 <p><strong>Service definition:</strong></p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>---
 string Info
@@ -364,6 +493,43 @@ float32 Pos_y_sent
 </dl>
 </li>
 </ul>
+</section>
+<section id="planning-action">
+<h2>Planning.action<a class="headerlink" href="#planning-action" title="Permalink to this heading"></a></h2>
+<p>The <em>Planning</em> action is designed to move a robot to a target position defined by a <strong>PoseStamped</strong>. The action accepts a target pose, and during execution, provides periodic feedback on the robot’s current position, along with the movement status.</p>
+<ul>
+<li><p><strong>Goal</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><em>target_pose</em> (<code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseStamped</span></code>): The target position the robot should reach, represented as a <strong>PoseStamped</strong> message. It includes the position (x, y, z) and orientation (roll, pitch, yaw) of the robot relative to a reference frame.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><dl class="simple">
+<dt><strong>Feedback</strong></dt><dd><ul class="simple">
+<li><p><em>actual_pose</em> (<code class="docutils literal notranslate"><span class="pre">geometry_msgs/Pose</span></code>): The current position of the robot, which provides periodic updates during the movement. The <strong>Pose</strong> message includes the position (x, y, z) and orientation (roll, pitch, yaw) relative to the robot’s reference frame.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Result</strong></p>
+<blockquote>
+<div><ul>
+<li><p><em>stat</em> (<code class="docutils literal notranslate"><span class="pre">string</span></code>): A string indicating the status of the operation. Possible values include:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><cite>“success”</cite>: The robot successfully reached the target position.</p></li>
+<li><p><cite>“failure”</cite>: The robot failed to reach the target position (e.g., due to movement errors or unexpected obstacles).</p></li>
+<li><p><cite>“in_progress”</cite>: The operation is still in progress, and the robot is moving toward the target position.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<h4>Usage</h4><p>When this action is invoked, the <strong>target_pose</strong> represents the desired destination for the robot. The feedback (<code class="docutils literal notranslate"><span class="pre">actual_pose</span></code>) will be periodically sent to monitor the robot’s current position while moving toward the goal. At the end of the action, the result (<code class="docutils literal notranslate"><span class="pre">stat</span></code>) will indicate whether the operation was successfully completed or not.</p>
+<h4>References</h4><p>See the <code class="docutils literal notranslate"><span class="pre">geometry_msgs/PoseStamped</span></code> and <code class="docutils literal notranslate"><span class="pre">geometry_msgs/Pose</span></code> message types for more details on the structure of the target and actual poses.</p>
 </section>
 </section>
 

@@ -11,23 +11,29 @@ info = "Last target sent coordinates: "
 """
 
 This node is a service node, so it means that it implements a communication of type request/response; this node use the SentCoords service 
-(inside the folder srv we can find SentCoords.srv); in detail this service is composed only by the response part since it is required to return 
-two values related to the last target position coordinates sent by the user, and there isn't any client that makes a request. The .srv response 
-part is composed of a message (so a string) and two float32 values; for calling the service it is sufficient to use the command:
+(inside the folder */srv* we can find *SentCoords.srv*); in detail this service is composed only by the response part since it is required to return 
+two values related to the last target position coordinates sent by the user, and there isn't any client that makes a request. The *.srv* response 
+part is composed of a message (so a string) and two *float32* values; for calling the service it is sufficient to use the command:
 
-    *rosservice call /SentCoord*
+.. code-block:: bash
+	    
+    	rosservice call /SentCoord
 
 and it will return:
 
-    *Info:	""Last target sent coordinates: "
-    Pos_x_sent: [value]
-    Pos_y_sent: [value]*
+.. code-block:: text
+
+	   - Info:	"Last target sent coordinates: "
+	   - Pos_x_sent: [value]
+	   - Pos_y_sent: [value]
+	   
 """
 def see_values(req): #for service
     """
 
-    This function retrieves values from the list of parameters using the ''rospy.get_param'' function, and then it load these values in two
+    This function retrieves values from the list of parameters using the **rospy.get_param** function, and then it load these values in two
     global variables dedicated to the (x,y) coordinate target values.
+    
     """
     global trg_x, trg_y, info
     trg_x = rospy.get_param('target_x')

@@ -80,23 +80,29 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="sd">This node is a service node, so it means that it implements a communication of type request/response; this node use the SentCoords service </span>
-<span class="sd">(inside the folder srv we can find SentCoords.srv); in detail this service is composed only by the response part since it is required to return </span>
-<span class="sd">two values related to the last target position coordinates sent by the user, and there isn&#39;t any client that makes a request. The .srv response </span>
-<span class="sd">part is composed of a message (so a string) and two float32 values; for calling the service it is sufficient to use the command:</span>
+<span class="sd">(inside the folder */srv* we can find *SentCoords.srv*); in detail this service is composed only by the response part since it is required to return </span>
+<span class="sd">two values related to the last target position coordinates sent by the user, and there isn&#39;t any client that makes a request. The *.srv* response </span>
+<span class="sd">part is composed of a message (so a string) and two *float32* values; for calling the service it is sufficient to use the command:</span>
 
-<span class="sd">    *rosservice call /SentCoord*</span>
+<span class="sd">.. code-block:: bash</span>
+<span class="sd">	    </span>
+<span class="sd">    	rosservice call /SentCoord</span>
 
 <span class="sd">and it will return:</span>
 
-<span class="sd">    *Info:	&quot;&quot;Last target sent coordinates: &quot;</span>
-<span class="sd">    Pos_x_sent: [value]</span>
-<span class="sd">    Pos_y_sent: [value]*</span>
+<span class="sd">.. code-block:: text</span>
+
+<span class="sd">	   - Info:	&quot;Last target sent coordinates: &quot;</span>
+<span class="sd">	   - Pos_x_sent: [value]</span>
+<span class="sd">	   - Pos_y_sent: [value]</span>
+<span class="sd">	   </span>
 <span class="sd">&quot;&quot;&quot;</span>
 <div class="viewcode-block" id="see_values"><a class="viewcode-back" href="../../index.html#scripts.coordinates_srv.see_values">[docs]</a><span class="k">def</span><span class="w"> </span><span class="nf">see_values</span><span class="p">(</span><span class="n">req</span><span class="p">):</span> <span class="c1">#for service</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 
-<span class="sd">    This function retrieves values from the list of parameters using the &#39;&#39;rospy.get_param&#39;&#39; function, and then it load these values in two</span>
+<span class="sd">    This function retrieves values from the list of parameters using the **rospy.get_param** function, and then it load these values in two</span>
 <span class="sd">    global variables dedicated to the (x,y) coordinate target values.</span>
+<span class="sd">    </span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">global</span> <span class="n">trg_x</span><span class="p">,</span> <span class="n">trg_y</span><span class="p">,</span> <span class="n">info</span>
     <span class="n">trg_x</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">get_param</span><span class="p">(</span><span class="s1">&#39;target_x&#39;</span><span class="p">)</span>
