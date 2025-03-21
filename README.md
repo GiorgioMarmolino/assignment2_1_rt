@@ -4,7 +4,10 @@ Made by: Marmolino Giorgio
 a.y. 2024/2025
 Project fully developed in python3
 
-(previous assignment has been developed in C++)
+## Documentation
+Detailed documentation can be found here:
+
+https://giorgiomarmolino.github.io/assignment2_1_rt/
 
 ## Project introduction
 In this project, a mobile robot moves in an environment of a 3D simulator in presence of edges and obstacles (given by walls); the goal of the robot is to reach the target position sent by the user.
@@ -32,19 +35,12 @@ This node is a service node, so it means that it implements a communication of t
 
 rosservice call /SentCoord
 
-and it will return:
-
-Info:	""Last target sent coordinates: "
-Pos_x_sent: [value]
-Pos_y_sent: [value]
-
 ## Prerequisites
 Before executing the project you are required to: 
 1) Install Gazebo, the 3D simulator for the ROS;
 2) Install Rviz, a tool for ROS visualization that allows the user to view the simulated mobile robot model with all its sensors and related informations; it is usefull for debug purposes;
-3) Xterm;
-4) python3, since the code is written in python3;
-5) Robot Operating System (known as ROS);
+3) python3, since the code is written in python3;
+4) Robot Operating System (known as ROS);
 
 
 
