@@ -17,9 +17,9 @@ This project has been developed starting from the original package of prof. Recc
 https://github.com/CarmineD8/assignment_2_2024
 
 Two nodes have been developed by me:
--first node implements an action client, allowing the user to set a target (x, y) or to cancel it. It uses the feedback/status of the action server to know when the target has been reached. The node also publishes the robot position and velocity as a custom message (x,y, vel_x, vel_z), by relying on the values published on the topic /odom (odometry);
 
--second node implements a service node that, when called, returns the coordinates of the last target sent by the user;
+- first node implements an action client, allowing the user to set a target (x, y) or to cancel it. It uses the feedback/status of the action server to know when the target has been reached. The node also publishes the robot position and velocity as a custom message (x,y, vel_x, vel_z), by relying on the values published on the topic /odom (odometry);
+- second node implements a service node that, when called, returns the coordinates of the last target sent by the user;
 
 ## Node descriptions
 
@@ -37,9 +37,9 @@ rosservice call /SentCoord
 
 ## Prerequisites
 Before executing the project you are required to: 
-1) Install Gazebo, the 3D simulator for the ROS;
-2) Install Rviz, a tool for ROS visualization that allows the user to view the simulated mobile robot model with all its sensors and related informations; it is usefull for debug purposes;
-3) python3, since the code is written in python3;
+1) Install Gazebo;
+2) Install Rviz;
+3) Python3;
 4) Robot Operating System (known as ROS);
 
 
