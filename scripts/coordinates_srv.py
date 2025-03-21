@@ -1,3 +1,35 @@
+"""
+.. module:: coordinates_srv
+    
+	    :platform: Unix
+	    :synopsis: Python module for the coordinates_srv service
+	    :author: Marmolino Giorgio
+
+
+This node is a service node, implementing a request/response communication. It uses the `SentCoords` service 
+(defined in the `/srv` folder with `SentCoords.srv`). Specifically, this service implements only the response part, 
+which returns two values related to the last target position coordinates sent by the user. 
+There is no client that sends a request.
+
+The response part of the `.srv` file consists of a string message and two `float32` values. To call the service, 
+you can use the following command:
+
+.. code-block:: bash
+
+    rosservice call /SentCoord
+
+It will return the following:
+
+.. code-block:: text
+
+    - Info: "Last target sent coordinates: "
+    - Pos_x_sent: [value]
+    - Pos_y_sent: [value]
+    
+"""
+
+
+
 #! /usr/bin/env python
 import rospy
 import assignment2_1_rt.msg
@@ -8,26 +40,17 @@ trg_x = 0.0
 trg_y = 0.0
 info = "Last target sent coordinates: "
     
-"""
 
-This node is a service node, so it means that it implements a communication of type request/response; this node use the SentCoords service 
-(inside the folder srv we can find SentCoords.srv); in detail this service is composed only by the response part since it is required to return 
-two values related to the last target position coordinates sent by the user, and there isn't any client that makes a request. The .srv response 
-part is composed of a message (so a string) and two float32 values; for calling the service it is sufficient to use the command:
 
-    *rosservice call /SentCoord*
-
-and it will return:
-
-    *Info:	""Last target sent coordinates: "
-    Pos_x_sent: [value]
-    Pos_y_sent: [value]*
-"""
-def see_values(req): #for service
+def see_values(req):  # For service
     """
-
-    This function retrieves values from the list of parameters using the ''rospy.get_param'' function, and then it load these values in two
-    global variables dedicated to the (x,y) coordinate target values.
+    
+    This function retrieves the target coordinates from the ROS parameter server using the `rospy.get_param` function, 
+    and stores these values in two global variables that represent the target (x, y) coordinates.
+    
+    :param req: The request object (not used in this case, as it is a response-only service).
+    :returns: A `SentCoordsResponse` object containing the string and the target coordinates.
+    
     """
     global trg_x, trg_y, info
     trg_x = rospy.get_param('target_x')
@@ -35,22 +58,22 @@ def see_values(req): #for service
     
     return SentCoordsResponse(info, trg_x, trg_y)
 
-def get_coords(): #main function
+
+def get_coords():  # Main function
+
     """
     
-    .. module:: coordinate_srv
     
-    :platform: Unix
-    :synopsis: Python module for the coordinate_srv
+    This function initializes the ROS node, sets up the `SentCoord` service, and starts the service loop with `rospy.spin`.
     
-    .. moduleauthor:: Marmolino Giorgio
-    
-    This is the main function of the service node, it is used to initialize the service node, implement the service and spin it.
+    :returns: None
     
     """
     rospy.init_node('coordinates_service')
     rospy.Service('SentCoord', SentCoords, see_values) 
     rospy.spin()
 
+
 if __name__ == "__main__":
     get_coords()
+
